@@ -1,9 +1,11 @@
 FROM n8nio/n8n:2.1.3
 
 USER root
-RUN apk add --no-cache ffmpeg
+
+RUN apt-get update \
+ && apt-get install -y ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
 
 USER node
-RUN npm install --omit=dev n8n-nodes-upload-post
 
 CMD ["n8n", "worker"]
